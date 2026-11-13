@@ -1,23 +1,33 @@
 # DSA0116 — Assignment 2
 
-This folder contains the seven C++ task solutions and the compiled assignment answer document.
+Seven standalone C++ solutions for CO2: Functions and Object-Oriented Concepts.
 
-## Structure
+## Repository layout
 
-- `Task01/` through `Task07/`: one standalone C++ program per task (`main.cpp`).
-- `Assignment_2_CO2_Answers.docx`: assignment write-up with explanations and code.
+| Folder | Topic | Files |
+|---|---|---|
+| `Task01/` | Call by value, reference, pointer, reference return and default arguments | `main.cpp`, `run-output.txt` |
+| `Task02/` | Return by reference, const reference, copy and dangling-reference warning | `main.cpp`, `run-output.txt` |
+| `Task03/` | Default arguments and function overloading | `main.cpp`, `run-output.txt` |
+| `Task04/` | Class with a fixed-size transaction array | `main.cpp`, `run-output.txt` |
+| `Task05/` | Static data members and arrays of objects | `main.cpp`, `run-output.txt` |
+| `Task06/` | Friend functions and inline functions | `main.cpp`, `run-output.txt` |
+| `Task07/` | Shift-based history versus a circular buffer | `main.cpp`, `run-output.txt` |
 
-## Compile and run
+## Build and run
 
-Use a C++17 compiler. For example:
+Compile any task with a C++17 compiler. For example:
 
 ```bash
-g++ -std=c++17 -Wall -Wextra Task01/main.cpp -o task01
+g++ -std=c++17 -Wall -Wextra -pedantic Task01/main.cpp -o task01
 ./task01
 ```
 
-Repeat with the task folder you want to run. Task 2 includes an intentionally unsafe dangling-reference example for discussion; it is not called by `main`.
+Replace `Task01` with the desired folder. On Windows, run the generated executable as `task01.exe`.
 
 ## Notes
 
-Terminal output screenshots and any performance measurements should be captured from the actual environment used for submission. Do not present predicted output or estimated timings as measured results.
+- Each task is an independent program with its own `main()`.
+- Task 2 contains a deliberately unsafe dangling-reference function to demonstrate the compiler warning. The function is not called.
+- The `run-output.txt` files contain sample runs from a Linux/g++ environment. Capture your own terminal screenshots and record your own compiler version for submission.
+- Timing tables and benchmark evidence must be measured on the machine used for the assignment; no timings are fabricated here.
