@@ -189,12 +189,13 @@ using namespace std;
 
 class Money {
     long long paise;
+    Money(long long totalPaise, bool) : paise(totalPaise) {}
 public:
     Money(long long rupees = 0, int p = 0)
         : paise(rupees * 100 + p) {}
 
     Money operator+(const Money& other) const {
-        return Money(0, static_cast<int>(paise + other.paise));
+        return Money(paise + other.paise, true);
     }
     bool operator==(const Money& other) const {
         return paise == other.paise;
