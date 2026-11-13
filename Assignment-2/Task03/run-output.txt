@@ -1,0 +1,6 @@
+charge(2): 40.04
+charge(2.0): 80
+charge(2.0f): 80
+charge(2000,true): 110
+charge(2.5,true,true): 135
+charge(parcel): 115
