@@ -1,0 +1,7 @@
+1 12 13
+1 100
+16 13 6 
+Value: 45000
+Reference: 40500
+Pointer: 40500
+Returned: 40500
