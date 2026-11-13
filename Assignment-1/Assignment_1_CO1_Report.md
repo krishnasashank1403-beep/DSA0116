@@ -1,28 +1,32 @@
-# Assignment 1 – CO1
-## Namma Metro Smart-Card Fare System
+# ASSIGNMENT 1
 
-**Name:** ____________________  
-**Register Number:** ____________________  
-**Course:** B.Tech – Artificial Intelligence and Machine Learning  
-**GitHub:** https://github.com/krishnasashank1403-beep/DSA0116
+**OBJECT-ORIENTED PROGRAMMING USING C++**
+
+**CO1 – Namma Metro Smart-Card Fare System**
+
+| Name | P . Krishna Sashank |
+| --- | --- |
+| Register Number | 192525191 |
+| Course id | DSA0116 |
+| Repository | https://github.com/krishnasashank1403-beep/DSA0116 |
 
 ## Task 1 – Understand the Problem and Identify the Objects
 
-The metro fare depends on the farthest zone travelled. Inner, Middle and Outer cost Rs 10, Rs 20 and Rs 30. A 20% surcharge is added during peak hours. After paying the fare, the card must still have at least Rs 50. Students and senior citizens receive concessions.
+The metro system has to calculate the fare based on the farthest zone a passenger travels to. Inner, Middle and Outer zone fares are Rs 10, Rs 20 and Rs 30. During peak hours, a 20% surcharge is added. After paying, the smart card must still have at least Rs 50. Students and senior citizens can receive a concession.
 
-I would use a few objects for this system. A **SmartCard** stores the card number and balance, and checks whether a journey is affordable before deducting the fare. A **Passenger** stores the passenger type and concession details. A **Journey** keeps the travel information, such as the zone and time. A **Zone** represents the area travelled, while a **FareTable** keeps the base fares and surcharge details.
+I would use a few main objects. A SmartCard stores the card number and balance, and it can check whether a journey is affordable and deduct the fare. A Passenger stores details such as passenger type and concession eligibility. A Journey keeps the source, destination, time and fare for one trip. Zone represents the area travelled, and FareTable stores the base fares and surcharge rules.
 
-Keeping the balance private in SmartCard helps prevent other parts of the program from changing it incorrectly. FareTable keeps the prices in one place, so a fare revision is easier. Inheritance could be used for student and senior-citizen passenger types. Polymorphism can be used when their concession rules differ. Encapsulation protects the balance, while abstraction hides the internal fare calculation.
+Keeping the balance private in SmartCard is useful because other parts of the program should not directly change it to an invalid value. The FareTable keeps fare values in one place, so a change does not require searching through the whole program. Passenger can be extended for student and senior-citizen categories, while a common fare calculation interface can handle their different concessions. Encapsulation protects the card balance, abstraction hides the calculation details, inheritance can represent passenger categories, and polymorphism can be used when different passenger types calculate concessions differently.
 
-A valid journey must have a known zone and valid time. The fare cannot be negative, and the card must have enough balance to leave at least Rs 50 after payment. Peak time is 8:00 AM to before 10:00 AM and 5:00 PM to before 8:00 PM. So, 10:00 AM and 8:00 PM are off-peak.
+A valid journey must have a known zone, a valid time, a non-negative fare and enough money on the card. Once the fare is deducted, the remaining balance cannot be below Rs 50. Peak time is from 8:00 AM to before 10:00 AM, and from 5:00 PM to before 8:00 PM. So 10:00 AM and 8:00 PM are not peak times.
 
-A procedural program could use variables and separate functions to do the same work. Both designs take O(1) time for one fare calculation and use O(1) memory per card. The main difference is that the object-oriented version keeps related data and functions together, which makes later changes easier.
+In a procedural design, the same information could be stored in variables and processed using separate functions. Both designs take O(1) time for one fare calculation and use O(1) memory per card. The bigger difference is maintenance: if a rule changes, an object-oriented design keeps the related data and behaviour together, so fewer unrelated parts need editing.
 
 ## Task 2 – Use Tokens, Keywords, Identifiers and Constants Correctly
 
-Keywords are reserved words such as `int`, `class`, `return` and `switch`. Identifiers are names created by the programmer, such as `SmartCard`, `balance` and `calculateFare`. Constants are fixed values. Operators include `+`, `-`, `*`, `/` and `==`. Punctuators include braces, brackets, commas and semicolons.
+C++ uses keywords such as int, class, return and switch. Identifiers are the names given by the programmer, for example SmartCard, balance and calculateFare. Constants are fixed values such as the minimum balance. Operators include +, -, *, / and ==. Punctuators include braces, parentheses, commas and semicolons.
 
-I would use `constexpr` for values known at compile time, such as fares and the surcharge percentage. Unlike `#define`, it has a type and follows normal C++ scope rules. `const` is useful for values that should not change after initialization. An `enum class` is suitable for zones because it keeps the zone names separate from ordinary integers.
+I would use constexpr for values that are known while compiling, such as the base fare for each zone and the peak surcharge percentage. Compared with #define, constexpr has a type and follows normal C++ scope rules. const is useful for values that should not change after initialization, even when their value is not known at compile time. enum class Zone { Inner, Middle, Outer } makes zone values clear and prevents accidental mixing with ordinary integers.
 
 ```cpp
 enum class Zone { Inner, Middle, Outer };
@@ -31,59 +35,58 @@ constexpr int PEAK_SURCHARGE_PERCENT = 20;
 constexpr long long MIN_BALANCE_PAISE = 5000;
 ```
 
-Class names can use PascalCase, while function and variable names can use camelCase. Names should explain what they represent. Macros do not have normal C++ types or scope. Compile-time constants usually do not need separate runtime storage, and neither choice changes the O(1) fare calculation time.
+Names should explain what the value is used for. I use PascalCase for class and enum names, and camelCase or descriptive lowercase names for functions and variables. A macro does not have a C++ type or normal scope, while constexpr values do. Neither usually needs separate runtime storage when used as a compile-time constant, and this choice does not change the O(1) fare calculation time.
 
 ## Task 3 – Choose Data Types and Check Type Compatibility
 
-Money should be stored as integer paise instead of double rupees. For example, Rs 10.50 is stored as 1050 paise. This avoids floating-point rounding differences when fares are added or deducted. Card balances and network totals should use `long long` because the number of journeys can become large.
+Money should be stored as integer paise instead of double rupees. For example, Rs 10.50 is stored as 1050 paise. This avoids small floating-point rounding differences when fares are added or deducted. The card balance and total collection can use long long because the network processes many journeys.
 
-| Value | Type | Reason |
-|---|---|---|
-| Fare and balance | `long long` (paise) | Exact whole-number money values and large totals |
-| Peak/concession flag | `bool` | True or false |
-| Zone | `enum class Zone` | Only the allowed zones |
-| Hour | `int` | Whole hour from 0 to 23 |
-| Journey count | `long long` | Large network counts |
-| Station code | `char` or `string` | Depends on code format |
+| Value | Suggested type | Reason |
+| --- | --- | --- |
+| Fare and balance | long long (paise) | Exact whole-number money values and large totals |
+| Peak or concession flag | bool | Only true or false |
+| Zone | enum class Zone | Clear set of allowed zone values |
+| Hour | int | Whole hour from 0 to 23 |
+| Journey count | long long | Large network-level counts |
+| Station code | char or string | Depends on the code format |
 
-On a typical 64-bit g++ system, `bool` and `char` are 1 byte, `int` is 4 bytes, and `long long` and `double` are 8 bytes. These sizes can be checked using `sizeof` on the system used.
+The exact sizeof values depend on the compiler and machine. On a typical 64-bit g++ system, bool and char are 1 byte, int is 4 bytes, and long long and double are 8 bytes. float is usually 4 bytes. The program can print sizeof(type) on the actual system to confirm it.
 
-When int, double and bool appear in one expression, C++ applies its promotion and conversion rules. An int may be converted to double during arithmetic, and a non-zero integer becomes true when stored in bool. For three million journeys costing Rs 30 each, the total is Rs 90,000,000, or 9,000,000,000 paise. That paise total does not fit in a signed 32-bit int, so long long is safer.
+When int, double and bool appear in one expression, C++ applies integer promotions and usual arithmetic conversions. For example, int plus double is evaluated as double. A bool used in arithmetic becomes 0 or 1. An int is enough for a small individual fare, but a network collection can exceed its maximum range. For three million Rs 30 journeys, the total is Rs 90,000,000 (900 crore? No: Rs 9 crore), which fits in a signed 32-bit int, but larger totals or paise totals require care. In paise this example is 9,000,000,000, which does not fit in a signed 32-bit int, so long long is the safer choice.
 
-Double rupees also normally uses 8 bytes and addition is O(1), but binary floating point cannot represent every decimal fraction exactly. Integer paise keeps the result exact as long as the integer type does not overflow.
+Using double rupees would still take O(1) time and normally 8 bytes per value, but binary floating point cannot represent every decimal fraction exactly. With integer paise, addition and subtraction stay exact as long as the chosen integer type does not overflow.
 
 ## Task 4 – Control Implicit Conversions
 
-An implicit conversion happens when C++ changes a value to another type automatically. For example, assigning an int expression to double converts the result to double, but it does not bring back any fraction lost during integer division. A char is promoted to int in arithmetic, and a non-zero integer becomes true when assigned to bool.
+An implicit conversion happens when C++ changes a value to another type without an explicit cast. For example, assigning an int expression to double converts the result to double, but it does not recover any fraction already lost through integer division. A char can be promoted to int during arithmetic. A non-zero integer converts to true when stored in bool. Comparing signed and unsigned integers can convert the signed value to unsigned, which can cause surprising results.
 
-Brace initialization helps catch narrowing conversions. For example, `int value{3.7};` is rejected because the decimal part would be lost. `static_cast` is useful when a conversion is intentional and should be clear in the code.
+Brace initialization helps prevent narrowing conversions. For example, int value{3.7}; is rejected by the compiler because a double would lose information when stored as int. static_cast is useful when a conversion is intentional and should be visible in the code.
 
-For the program in the question, the output is:
-
-```text
-3 3.5
-C 68
-1 true
-s >= u
+```cpp
+int a = 7, b = 2;
+double c = a / b;
+double d = static_cast<double>(a) / b;
+std::cout << c << ' ' << d << '\\n';
+char ch = 'A' + 2;
+std::cout << ch << ' ' << ch + 1 << '\\n';
+bool flag = 5;
+std::cout << flag << ' ' << std::boolalpha << flag << '\\n';
+unsigned int u = 1;
+int s = -1;
+std::cout << (s < u ? "s < u" : "s >= u") << '\\n';
 ```
 
-The first result is 3 because `a / b` performs integer division before the answer is assigned to double. The explicit cast makes the second division floating point and gives 3.5. The character expression prints C, and then 68 because the character is promoted to its integer code before adding 1. The value 5 converts to true, displayed as 1 first and as true after `boolalpha`. In the signed/unsigned comparison, -1 is converted to a large unsigned value, so the condition is false and the program prints `s >= u`.
+The output is 3 3.5 because a / b is integer division and gives 3 before it is assigned to double. The explicit cast makes the division floating point. The character expression prints C, followed by 68 because ch is promoted to its integer character code before adding 1. The bool line prints 1 true: the integer 5 converts to true, and boolalpha changes the second display to a word. For the signed/unsigned comparison, -1 is converted to a large unsigned value, so the comparison is false and the program prints s >= u.
 
-Using explicit casts and brace initialization makes conversions clearer and catches some mistakes during compilation. It does not change the O(1) time or storage used for these values.
+Using explicit casts and brace initialization makes these conversion points clearer and can catch narrowing mistakes at compile time. It does not change the O(1) time or storage required for these simple values.
 
 ## Task 5 – Write Correct Expressions with the Right Precedence
 
-The peak-hour check should be:
+The peak-hour expression should be written as (hour >= 8 && hour < 10) || (hour >= 17 && hour < 20). Parentheses make the two time ranges easy to read. The surcharge can be calculated with fare += fare * 20 / 100, using integer paise. A concession can be applied similarly after checking the passenger type.
 
-```cpp
-(hour >= 8 && hour < 10) || (hour >= 17 && hour < 20)
-```
+In x++, the current value is used before the increment. In ++x, the value is incremented before it is used. Writing i = i++ should be avoided because it is confusing and can lead to undefined or unsequenced behaviour depending on the expression and language version. For integer division with negative values, C++ truncates toward zero; the remainder has the sign of the left operand.
 
-The parentheses make the two time periods easier to understand. The surcharge can be calculated with `fare += fare * 20 / 100;`. A concession can be applied in a similar way after checking the passenger type.
-
-With `x++`, the current value is used before incrementing. With `++x`, the increment happens first. It is better not to write `i = i++` because the expression is confusing and can cause unsequenced behaviour. Integer division with negative values truncates towards zero, and the remainder has the sign of the left operand.
-
-For the given program, the output is:
+For the supplied program, the output is:
 
 ```text
 11 16
@@ -93,22 +96,32 @@ For the given program, the output is:
 18
 ```
 
-Multiplication happens before addition, so the first line is 11 and 16. In the second line, `x++` uses 5 and then changes x to 6, while `++y` changes y to 4 before using it. Therefore z is 9. The conditional operator prints the larger value, 6. The expression `x % 4 * 2` is evaluated from left to right for these operators and gives 4. The division and remainder results are 3, 1, -3 and -1. The loop adds 0, 3, 6 and 9, giving 18.
+First, multiplication happens before addition, so 5 + 3 * 2 is 11, while (5 + 3) * 2 is 16. Next, x++ uses 5 and then increments x to 6; ++y first increments y from 3 to 4 and then uses 4, so z becomes 9. The next line prints the larger of x and y (6), and x % 4 * 2 is evaluated left to right for equal-precedence multiplicative operators, giving 2 * 2 = 4. Integer division gives 3 and remainder 1 for 10 / 3 and 10 % 3; for -10, the quotient is -3 and remainder is -1. The loop adds 0, 3, 6 and 9, giving 18.
 
-A lookup table with 24 bool values could also store which hours are peak. Both approaches take O(1) time to check. The table uses additional space, while the expression does not need a separate table.
+A lookup table with 24 bool values could store whether each hour is peak. The time for a check is O(1) either way. The table makes checking direct but uses about 24 bool elements, and the expression version uses no table.
 
 ## Task 6 – Design the Control Structures
 
-I would use a switch statement to select the base fare for a zone, and if statements to check peak time and the card balance. A range-based for loop is suitable when journeys are stored in an array or container. `continue` can skip an invalid journey, and `break` can stop processing.
+I would use switch to select the base fare for a zone, and if statements to check peak time and whether the card has enough balance. A loop can process each journey. A range-based for loop is suitable when the journeys are already stored in an array or container. continue can skip an invalid journey, and break can stop processing if the input is no longer usable.
 
 Pseudocode:
 
-1. Read the zone, hour and card balance.
-2. Select the base fare using the zone.
-3. Check whether the hour is in either peak period.
-4. If it is peak, add the 20% surcharge.
-5. Check whether balance minus fare is at least 5000 paise.
-6. If yes, deduct the fare and print the new balance. Otherwise, deny the journey.
+```text
+START
+Read zone, hour, and card balance
+Select base fare using zone
+IF hour is between 8 and 10 (excluding 10)
+OR hour is between 17 and 20 (excluding 20)
+Add 20 percent surcharge
+ENDIF
+IF balance - fare is at least 5000 paise
+Deduct fare
+Print fare and remaining balance
+ELSE
+Print journey denied
+ENDIF
+END
+```
 
 ```cpp
 long long fare(Zone zone, bool peak) {
@@ -127,27 +140,25 @@ bool canTravel(long long balance, long long amount) {
 }
 ```
 
-For the supplied journeys, the fares are Rs 10.00 and Rs 36.00. The third journey is denied because paying Rs 20 would leave less than Rs 50. The balance after the first two journeys is Rs 54.
+For the supplied trips, the fares are Rs 10.00, Rs 36.00 and the third journey is denied because paying Rs 20 would leave less than Rs 50. The remaining balance after the first two journeys is Rs 54.
 
-A fare array indexed by zone is another O(1) option. It uses a small amount of memory and can be convenient when adding zones. With a fourth zone, the enum and the fare array or switch statement must be updated.
+A fare array indexed by the zone is another O(1) option. It uses a small fixed amount of memory and can be easier to extend when more zones are added, while switch gives each case a clear named branch. With a fourth zone, both the enum and the fare data or switch must be updated.
 
 ## Task 7 – From Procedural to Object-Oriented
 
-In a procedural version, the balance is stored in a variable and separate functions check and deduct the fare. In the object-oriented version, SmartCard keeps the balance private and provides `canTravel()` and `deduct()` functions. This makes it harder for another part of the program to set an invalid balance.
+In a procedural version, the balance is stored in a variable and free functions check and deduct the fare. In an object-oriented version, SmartCard stores the balance as a private member and provides canTravel() and deduct() functions. This prevents unrelated code from directly setting the balance to a negative value.
 
 ```cpp
 class SmartCard {
 private:
     long long balancePaise;
     static constexpr long long minimumPaise = 5000;
-
 public:
     explicit SmartCard(long long openingBalance)
         : balancePaise(openingBalance) {}
 
     bool canTravel(long long farePaise) const {
-        return farePaise >= 0 &&
-               balancePaise - farePaise >= minimumPaise;
+        return farePaise >= 0 && balancePaise - farePaise >= minimumPaise;
     }
 
     bool deduct(long long farePaise) {
@@ -160,11 +171,11 @@ public:
 };
 ```
 
-Both versions take O(1) time for a balance check or deduction and use O(1) memory per card. If the balance were public, any part of the program could change it without checking the Rs 50 rule. Keeping it private makes the rule easier to protect.
+Both styles take O(1) time for a balance check or deduction and use O(1) memory per card. If the balance were public, any part of the program could change it without checking the Rs 50 rule. Keeping it private makes the rule easier to protect and maintain.
 
 ## Task 8 – Read and Print Data Safely
 
-The program should check whether input was read correctly. If letters are entered where a number is expected, cin enters a failed state. The program can use `cin.clear()` to reset the state and `cin.ignore()` to discard the invalid input before asking again. Money can be displayed with `fixed` and `setprecision(2)`.
+The gate program should check whether each input was read correctly. If the operator enters letters where a number is expected, cin enters a failed state. The program should use cin.clear() to reset the state and ignore the rest of the invalid line before asking again. Money should be printed with fixed and setprecision(2), or formatted from integer paise.
 
 ```cpp
 #include <iostream>
@@ -178,54 +189,52 @@ int main() {
         if (std::cin >> hour && hour >= 0 && hour <= 23) break;
         std::cout << "Invalid input. Try again.\\n";
         std::cin.clear();
-        std::cin.ignore(
-            std::numeric_limits<std::streamsize>::max(), '\\n');
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\\n');
     }
-
     double rupees = 10.5;
-    std::cout << "Fare: Rs " << std::fixed
-              << std::setprecision(2) << rupees << '\\n';
+    std::cout << "Fare: Rs " << std::fixed << std::setprecision(2)
+              << rupees << '\\n';
 }
 ```
 
-Another option is to read a whole line with `getline()` and convert it using `stoi()` inside try/catch. Both approaches take O(L) time for a line of length L. getline gives more control over the full line, while cin is convenient for simple numeric input.
+Another approach is to read a full line with getline() and convert it using stoi() inside try/catch. Both approaches process a line in O(L) time in relation to its length. getline gives more control over the full input line, while cin is convenient for straightforward numeric values. In either approach, invalid input should not be allowed to continue into the fare calculation.
 
 ## Task 9 – Implement and Test the Fare Logic
 
-The fare calculation should be checked for all three zones during peak and off-peak hours. The boundary times matter: 8:00 and 17:00 are peak, while 10:00 and 20:00 are off-peak. A journey should be allowed when the balance after payment is exactly Rs 50, and denied when it would be lower.
+The fare logic should be checked for all three zones in peak and off-peak hours. Boundary times are important: 8:00 and 17:00 are peak, while 10:00 and 20:00 are not. A card should be allowed to travel when the balance after deduction is exactly Rs 50. It should be denied when the remaining balance would be Rs 49.99 or lower.
 
-| Test | Expected result |
-|---|---|
+| Case | Expected result |
+| --- | --- |
 | Inner, off-peak | Rs 10.00 |
 | Middle, off-peak | Rs 20.00 |
 | Outer, off-peak | Rs 30.00 |
-| Inner at 08:00 | Rs 12.00 |
-| Outer at 17:00 | Rs 36.00 |
-| At 10:00 or 20:00 | No peak surcharge |
-| Balance exactly fare + Rs 50 | Allowed |
-| Balance below fare + Rs 50 | Denied |
-| Unknown zone or negative recharge | Reject input |
-| Letters entered for hour | Show error and request input again |
+| Inner, 08:00 | Rs 12.00 |
+| Outer, 17:00 | Rs 36.00 |
+| 10:00 or 20:00 | No peak surcharge |
+| Balance exactly fare + Rs 50 | Journey allowed |
+| Balance below fare + Rs 50 | Journey denied |
+| Unknown zone or negative recharge | Input rejected |
+| Letters entered for hour | Input error handled and input requested again |
 
-A table-driven test can store the inputs and expected results, then check each row in a loop. Running t test cases takes O(t) time and the table uses O(t) space. Adding another boundary case only needs another row.
+A table-driven test can store inputs and expected results, then run each case in a loop. For t test cases the time is O(t), and the test table uses O(t) space. Adding a new boundary test is simple because another row can be added without writing a new test block.
 
 ## Task 10 – Compare Expectations with Execution
 
-The total should be accumulated in integer paise using long long. If 3,000,000 journeys each cost Rs 30, the total is Rs 90,000,000, or 9,000,000,000 paise. The paise total is greater than the maximum value of a signed 32-bit int, so int is not suitable for this network total. long long can store it safely.
+The total should be accumulated in integer paise using long long. For example, if every one of 3,000,000 journeys costs Rs 30, the total is Rs 90,000,000 or 9,000,000,000 paise. The paise total is larger than the maximum value of a signed 32-bit int, so int is not suitable for the network-wide paise total. long long can store it safely.
 
-Double can show a decimal total that looks correct for many inputs, but repeated floating-point additions can introduce small differences. Integer paise gives an exact result as long as the total stays within the range of long long. Addition takes O(1) time for these types; the main differences are range and precision.
+Using double may display a decimal total that looks correct for many inputs, but floating-point representation can introduce small differences when values are repeatedly added. Integer paise gives an exact result as long as the total remains within the range of long long. The time per addition is O(1) for int, long long and double; the main difference is range and exactness.
 
 ## Task 11 – Recommend and Defend the Final Design
 
-I would keep the fare values in one constexpr table, use enum class for zones, and store money as long long paise. SmartCard should keep its balance private and provide functions to check and deduct fares. A separate fare calculation function should handle base fares and the peak surcharge. Passenger details can be kept separate so that concession rules do not get mixed into the card balance logic.
+I would keep the fare values in one constexpr fare table, use enum class for zones, and store all money as long long paise. SmartCard should keep its balance private and provide functions to check and deduct a fare. A separate FareTable or fare calculation function should handle the base fare and peak surcharge. The passenger type can be represented separately so concessions do not become mixed into the card balance logic.
 
-This design can handle a large network because each fare calculation and balance update takes O(1) time. If fares change frequently, they could be read from a configuration file at program start. Reading z fare values takes O(z) startup time and O(z) storage, but the program would need to check that the file contains valid values.
+This design is suitable for a larger network because each fare calculation and balance update takes O(1) time. The main limitation is that any new fare rule still needs to be tested carefully, especially where discounts and surcharges interact. If fares change often, reading them from a configuration file at program start can avoid recompiling the program. Reading z zone values takes O(z) startup time and O(z) storage, but it makes incorrect or missing configuration values something the program must validate.
 
 ## Task 12 – Re-evaluate and Adapt the Design
 
-The new requirements add an Airport zone costing Rs 60, a 10% weekend discount that cannot be combined with the peak surcharge, and a monthly pass that allows unlimited journeys in two selected zones.
+The updated system has an Airport zone with a fare of Rs 60, a 10% weekend discount that cannot be combined with the peak surcharge, and a monthly pass that allows unlimited journeys in two selected zones. The original three-zone switch must be updated, and the fare rules should be separated so discounts and passes can be applied in a clear order.
 
-I would modify the existing design instead of replacing everything. The fare table can be extended with the Airport fare. A separate Pass class can store the two zones covered by the monthly pass. Before charging the smart card, the program checks whether the pass covers that journey. If it does not, the normal fare is calculated. The weekend discount is applied instead of the peak surcharge, so both adjustments are never applied together.
+I would modify the design rather than replace everything. The SmartCard class can still manage the stored balance, while a FareTable holds four base fares. A separate Pass class stores the two zones covered by the monthly pass. The fare calculation first checks whether the passenger has a valid pass for the journey. If there is no pass, it selects the base fare, then applies either the weekend discount or the peak surcharge, but never both.
 
 ```cpp
 enum class Zone { Inner, Middle, Outer, Airport };
@@ -246,12 +255,10 @@ class Pass {
     Zone second;
 public:
     Pass(Zone a, Zone b) : first(a), second(b) {}
-    bool covers(Zone z) const {
-        return z == first || z == second;
-    }
+    bool covers(Zone z) const { return z == first || z == second; }
 };
 ```
 
-For example, an Airport journey normally costs Rs 60. During peak hours on a weekday it costs Rs 72. On a weekend it costs Rs 54, even when the journey is during peak hours, because the weekend discount does not combine with the surcharge. A pass covering the Airport zone makes that covered journey free under the stated unlimited-journey rule.
+For example, an Airport trip normally costs Rs 60. During peak time on a weekday it costs Rs 72. On a weekend it costs Rs 54, even if the travel time falls in peak hours, because the weekend discount does not combine with the surcharge. A pass covering Airport makes the covered journey free under the stated unlimited-journey rule. The SmartCard still needs to enforce the minimum balance for journeys that are paid using the stored-value card; the assignment brief does not specify whether pass journeys should be subject to the Rs 50 minimum, so that detail should be confirmed before final implementation.
 
-The brief does not say whether a pass journey must still leave Rs 50 in the stored-value card. That detail should be confirmed before completing the final gate implementation. Overall, the fare table and separate pass logic make the updated requirements easier to handle without changing the whole design.
+The fare table makes adding the fourth zone straightforward. Separating the discount and pass logic keeps the new rules easier to change later. The main thing to test is that a weekend journey receives only the discount and never both adjustments.
