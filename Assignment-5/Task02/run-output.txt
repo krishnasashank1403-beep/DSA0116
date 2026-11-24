@@ -1,0 +1,9 @@
+ok done caught negative ok [log too large] caught too large 
+approved 40000
+audit: exceeds cover
+claim rejected: exceeds cover
+error: negative amount
+Resource released
+allocation request failed: vector::reserve
+input error: stod
+Program continues
