@@ -1,0 +1,4 @@
+Series: 10 + j3
+Magnitude: 10.4403
+Parallel: 2 + j4
+Division by zero impedance
