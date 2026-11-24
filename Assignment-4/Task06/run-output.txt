@@ -1,0 +1,7 @@
+Bicycle rent: Success, 2-day charge Rs 200
+TwoWheeler rent: Success, 2-day charge Rs 550
+Car rent: Success, 2-day charge Rs 2100
+ElectricCar rent: Success, 2-day charge Rs 2480
+ElectricBus rent: Success, 2-day charge Rs 6440
+Late return charge: Rs 100
+Returned bicycle rent: Success
