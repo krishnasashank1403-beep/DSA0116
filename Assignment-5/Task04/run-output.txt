@@ -1,0 +1,15 @@
+OP Ravi: 1700.00
+  Insurance covers 1360.00
+  CorporatePayer covers 1275.00
+IP Meena: 47500.00
+  Insurance covers 38000.00
+  CorporatePayer covers 35625.00
+DayCare Asha: 18000.00
+  Insurance covers 14400.00
+  CorporatePayer covers 13500.00
+Emergency Kiran: 3250.00
+  Insurance covers 2600.00
+  CorporatePayer covers 2437.50
+Corporate Nila: 18000.00
+  Insurance covers 14400.00
+  CorporatePayer covers 13500.00
