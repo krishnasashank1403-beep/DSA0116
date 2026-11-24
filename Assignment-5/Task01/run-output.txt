@@ -1,0 +1,17 @@
+OP Ravi: 1700.00
+  SelfPay covers 0.00
+  Insurance covers 1360.00
+  GovernmentScheme covers 1700.00
+IP Meena: 52500.00
+  SelfPay covers 0.00
+  Insurance covers 40000.00
+  GovernmentScheme covers 15000.00
+DayCare Asha: 18000.00
+  SelfPay covers 0.00
+  Insurance covers 14400.00
+  GovernmentScheme covers 15000.00
+Emergency Kiran: 3250.00
+  SelfPay covers 0.00
+  Insurance covers 2600.00
+  GovernmentScheme covers 3250.00
+Day total: 75450.00
