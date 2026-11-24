@@ -1,0 +1,5 @@
++A +B -B copyAc use -Ac +P -P end Event opened
+Event opened
+Event closed. Seats booked: 1
+Event closed. Seats booked: 1
+-A 
