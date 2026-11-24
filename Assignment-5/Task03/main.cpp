@@ -1,9 +1,6 @@
 #include <chrono>
-#include <memory>
-#include <iomanip>
 #include <iostream>
-#include <random>
-#include <string>
+#include <memory>
 #include <vector>
 using namespace std;
 using Clock=chrono::steady_clock;
@@ -18,25 +15,29 @@ template<class F> long long measure(F f){
     return chrono::duration_cast<chrono::milliseconds>(Clock::now()-start).count();
 }
 int main(){
-    cout<<fixed<<setprecision(2);
-    vector<unique_ptr<BillBase>> poly;
-    vector<PlainBill> plain;
+    vector<unique_ptr<BillBase>> poly10;
+    vector<PlainBill> plain10;
     for(int i=0;i<10;++i){
-        if(i%2==0){poly.push_back(make_unique<OP>(500+i,1200));plain.push_back({0,500.0+i,1200,0});}
-        else {poly.push_back(make_unique<IP>(3,2500,40000));plain.push_back({1,3,2500,40000});}
+        if(i%2==0){poly10.push_back(make_unique<OP>(500+i,1200));plain10.push_back({0,500.0+i,1200,0});}
+        else {poly10.push_back(make_unique<IP>(3,2500,40000));plain10.push_back({1,3,2500,40000});}
     }
     double a=0,b=0;
-    for(auto& x:poly)a+=x->total();
-    for(auto& x:plain)b+=x.total();
-    cout<<"Virtual total: "<<a<<'\n'<<"Switch total: "<<b<<'\n';
+    for(const auto& x:poly10)a+=x->total();
+    for(const auto& x:plain10)b+=x.total();
+    cout<<"Virtual total: "<<a<<"\nSwitch total: "<<b<<'\n';
+
     for(size_t n:{1000u,1000000u,10000000u}){
-        vector<PlainBill> data; data.reserve(n);
-        for(size_t i=0;i<n;++i)data.push_back({int(i%2),500.0,3,40000});
-        auto virtualMs=measure([&](){double s=0;for(size_t i=0;i<n;++i)s+=data[i].total();return s;});
-        auto switchMs=measure([&](){double s=0;for(const auto& x:data)s+=x.total();return s;});
-        cout<<n<<" records switch scan ms: "<<switchMs<<" (virtual-class timings require polymorphic dataset)\n";
-        (void)virtualMs;
+        vector<unique_ptr<BillBase>> poly; vector<PlainBill> plain;
+        poly.reserve(n); plain.reserve(n);
+        for(size_t i=0;i<n;++i){
+            if(i%2==0){poly.push_back(make_unique<OP>(500,1200));plain.push_back({0,500,1200,0});}
+            else {poly.push_back(make_unique<IP>(3,2500,40000));plain.push_back({1,3,2500,40000});}
+        }
+        auto virtualMs=measure([&](){double s=0;for(const auto& x:poly)s+=x->total();return s;});
+        auto switchMs=measure([&](){double s=0;for(const auto& x:plain)s+=x.total();return s;});
+        cout<<n<<" bills: virtual ms "<<virtualMs<<", switch ms "<<switchMs<<'\n';
     }
+
     for(int invalidPercent:{0,1,50}){
         const int n=1000000; vector<double> amounts(n,500.0);
         for(int i=0;i<n*invalidPercent/100;++i)amounts[i]=-1;
