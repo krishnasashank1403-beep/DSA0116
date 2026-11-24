@@ -1,0 +1,2 @@
+Address+ Person+ Student+ 192311001 Kavya (19) Salem-636001
+Student- Person- Address- | Address+ Person+ Staff+ Staff- Person- Address- | Address+ Person+ Student+ TA+ TA- Student- Person- Address- 
