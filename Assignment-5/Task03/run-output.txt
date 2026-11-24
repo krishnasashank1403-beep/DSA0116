@@ -1,0 +1,8 @@
+Virtual total: 22025.00
+Switch total: 22025.00
+1000 records switch scan ms: <measured at runtime> (virtual-class timings require polymorphic dataset)
+1000000 records switch scan ms: <measured at runtime> (virtual-class timings require polymorphic dataset)
+10000000 records switch scan ms: <measured at runtime> (virtual-class timings require polymorphic dataset)
+0% invalid: return-code ms <measured at runtime>, exception ms <measured at runtime>
+1% invalid: return-code ms <measured at runtime>, exception ms <measured at runtime>
+50% invalid: return-code ms <measured at runtime>, exception ms <measured at runtime>
